@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import useRecipeStore from '../recipeStore';
+import { useState } from 'react';
+import { useRecipeStore } from './recipeStore';
 
 const AddRecipeForm = () => {
-  const addRecipe = useRecipeStore((state) => state.addRecipe);
+  const addRecipe = useRecipeStore(state => state.addRecipe);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addRecipe({ id: Date.now(), title, description });
+    // Generate uniqued Ids
+    const generateUniqueId = () => `${Date.now()}-${Math.random()}`;
+    addRecipe({ id: generateUniqueId(), title, description });
     setTitle('');
     setDescription('');
+    setTimeout(() => {
+       alert(`New Recipe Added sucessfullly`)
+    }, 100)
   };
+// // condition for when title and details is empty
 
   return (
     <form onSubmit={handleSubmit}>
@@ -20,13 +26,11 @@ const AddRecipeForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-        required
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        required
       />
       <button type="submit">Add Recipe</button>
     </form>
