@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import {  Navigate } from 'react-router-dom';
+const useAuth = () => {
+  
+  return false; 
+};
 
-function ProtectedRoute() {
-  return (
-    <div>ProtectedRoute</div>
-  )
-}
 
-export default ProtectedRoute
+const ProtectedRoute = ({ element }) => {
+  return useAuth() ? element : <Navigate to="/" />;
+};
+
+export default ProtectedRoute;
